@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+	<head>
+		<meta charset="utf-8">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+			<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+			<title>🕰 The Time</title>
+			<meta name="description" content="I tell the time">
+			<link rel="manifest" href="manifest.json">
+			<meta name="theme-color" content="#FFFFFF" />
+			<style>
+*{margin:0;padding:0}
+html,body{height:100%}
+body{font:100 100%/1.4 -apple-system,"BlinkMacSystemFont","Helvetica Neue","Helvetica","Lucida Grande","Arial",sans-serif;display:flex;justify-content:center;align-items:center}
+#thetime{font-size:10em;user-select:none;cursor:pointer;}
+@media(orientation:landscape){#thetime{font-size:35vh}}
+@media(orientation:portrait){#thetime{font-size:35vw}}
+input[type="checkbox"]{display:none;}
+			</style>
+	</head>
+	<body>
+		<br>
+		<form><label><input type="checkbox" id="format12"><div id="thetime"></div></label></form>
+		<script>
+(function(){
+const time = (d = new Date()) => [format(d.getHours()), d.getMinutes()].join(':');
+const format = hours => format12.checked && hours > 12 ? hours - 12 : hours;
+const change = () => thetime.innerText = time();
+change();
+format12.onchange = change;
+setInterval(change, 5000);
+})();
+		</script>
+	</body>
+</html>
