@@ -30,16 +30,24 @@ input[type="checkbox"]{display:none}
 	</head>
 	<body>
 		<noscript>You need Javascript to run this app</noscript>
-		<form><label><input type="checkbox" id="format12"><h1 id="thetime"></h1></label></form>
+		<form><label><input type="checkbox" id="format12" checked><h1 id="thetime"></h1></label></form>
 		<script>
 (function(){
-const time = (d = new Date()) => [format(d.getHours()), dd(d.getMinutes())].join(':');
-const format = hours => format12.checked && hours > 12 ? hours - 12 : format12.checked ? hours : dd(hours);
-const change = () => thetime.innerText = time();
-const dd = number => number < 10 ? `0${number}` : number;
-change();
-format12.onchange = change;
-setInterval(change, 5000);
+	const fulls = ['🕛','🕐','🕑','🕒','🕓','🕔','🕕','🕖','🕗','🕘','🕙','🕚'];
+	const halfs = ['🕧','🕜','🕝','🕞','🕟','🕠','🕡','🕢','🕣','🕤','🕥','🕦'];
+	const format = hours => format12.checked ? hours % 12 : dd(hours);
+	const change = () => {
+		const d = new Date();
+		const hours = format(d.getHours());
+		const minutes = dd(d.getMinutes());
+		const time = [hours, minutes].join(':');
+		document.title = [(minutes < 30 ? fulls : halfs)[hours % 12] , 'it\'s', time].join(' ');
+		thetime.innerText = time;
+	};
+	const dd = number => number < 10 ? `0${number}` : number;
+	change();
+	format12.onchange = change;
+	setInterval(change, 5000);
 })();
 		</script>
 	</body>
