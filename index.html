@@ -8,7 +8,7 @@
 			<meta name="description" content="What time is it? 🕰 I tell the time. 🕰 A simple digital clock.">
 			<link rel="canonical" href="https://omrilotan.com/time/">
 			<link rel="alternate" href="https://omrilotan.com/time/" hreflang="en-GB">
-			<link rel="manifest" href="manifest.json">
+			<link rel="manifest" href="manifest.webmanifest">
 			<meta name="theme-color" content="#ffffff">
 			<meta name="apple-mobile-web-app-capable" content="yes">
 			<meta name="apple-mobile-web-app-status-bar-style" content="#ffffff">
@@ -51,6 +51,7 @@ input[type="checkbox"]{display:none}
 	change();
 	format12.onchange = change;
 })();
+navigator.onLine && location.protocol.startsWith('https') && 'serviceWorker' in navigator && navigator.serviceWorker.register('sw.js?ck=v1');
 		</script>
 	</body>
 </html>
