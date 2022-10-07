@@ -35,7 +35,7 @@ input[type="checkbox"]{display:none}
 (function(){
 	const fulls = ['🕛','🕐','🕑','🕒','🕓','🕔','🕕','🕖','🕗','🕘','🕙','🕚'];
 	const halfs = ['🕧','🕜','🕝','🕞','🕟','🕠','🕡','🕢','🕣','🕤','🕥','🕦'];
-	const format = hours => format12.checked ? hours % 12 : dd(hours);
+	const format = hours => format12.checked ? sd(hours) : dd(hours);
 	let timer;
 	function change() {
 		const d = new Date();
@@ -48,6 +48,7 @@ input[type="checkbox"]{display:none}
 		timer = setTimeout(change, (60 - d.getSeconds()) * 1000);
 	};
 	const dd = number => number < 10 ? `0${number}` : number;
+	const sd = number => number % 12 > 0 ? number % 12 : number;
 	change();
 	format12.onchange = change;
 })();
