@@ -35,20 +35,19 @@ input[type="checkbox"]{display:none}
 (function(){
 	const fulls = ['🕛','🕐','🕑','🕒','🕓','🕔','🕕','🕖','🕗','🕘','🕙','🕚'];
 	const halfs = ['🕧','🕜','🕝','🕞','🕟','🕠','🕡','🕢','🕣','🕤','🕥','🕦'];
-	const format = hours => format12.checked ? sd(hours) : dd(hours);
 	let timer;
 	function change() {
 		const d = new Date();
-		const hours = format(d.getHours());
-		const minutes = dd(d.getMinutes());
-		const time = [hours, minutes].join(':');
-		document.title = [(minutes < 30 ? fulls : halfs)[hours % 12] , 'it\'s', time].join(' ');
+		const time = d.toLocaleTimeString([], {
+			hour: format12.checked ? 'numeric' : '2-digit',
+			minute: '2-digit',
+			hour12: format12.checked
+		}).replace(/[ap]m/i, '').trim();
+		document.title = [(d.getMinutes() < 30 ? fulls : halfs)[d.getHours() % 12] , 'it\'s', time].join(' ');
 		thetime.innerText = time;
 		clearTimeout(timer);
 		timer = setTimeout(change, (60 - d.getSeconds()) * 1000);
 	};
-	const dd = number => number < 10 ? `0${number}` : number;
-	const sd = number => number % 12 > 0 ? number % 12 : number;
 	change();
 	format12.onchange = change;
 })();
